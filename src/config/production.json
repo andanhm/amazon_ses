@@ -1,0 +1,14 @@
+{
+    "multiples": 1,
+    "port": 80,
+    "aws": {
+        "ses": {
+            "accessKeyId": "xxxxxxxxxx",
+            "secretAccessKey": "xxxxxxx",
+            "region": "us-east-1"
+        }
+    },
+    "db": {
+        "mongo": "mongodb://127.0.0.1:27017/email'?authSource=admin'"
+    }
+}
