@@ -1,16 +1,8 @@
 'use strict';
-var router = require('express').Router(); // eslint-disable-line
-
-// Set all the headers here
-router.all('*', function(req, res, next) {
-  res.header('Server', require('os').hostname());
-  next();
-});
+var appCtrl = require('./controller/index'),
+    emailCtrl = require('./controller/email');
 
 module.exports = function(app) {
-  app.use('*', router);
-  
-  // Index page
-//   app.use('/', require('./controllers/indexCtlr.js'));
-
+  app.get('/status', appCtrl.checkHealth);
+  app.get('/send', appCtrl.checkHealth);
 };

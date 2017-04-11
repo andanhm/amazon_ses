@@ -1,7 +1,7 @@
 {
   "name": "amazon_ses",
   "version": "1.0.0",
-  "description": "This is a in-house Queue Management System with user priority that can be used to control the traffic in Bookmyshow site.",
+  "description": "This is a dome project to send email with attachment using Amazon SES and handling email matrix with SQS",
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint .",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://stash.bms.bz/projects/SP/repos/queue-man"
+    "url": "https://github.com/andanhm/amazon_ses"
   },
   "devDependencies": {
     "eslint": "^3.12.2",
@@ -35,6 +35,7 @@
     "mongoose": "~4.0.5",
     "nodemailer": "^2.6.4",
     "nodemailer-ses-transport": "^1.5.0",
+    "querystring": "^0.2.0",
     "request": "^2.80.0",
     "response-time": "^2.3.2",
     "url": "^0.11.0"

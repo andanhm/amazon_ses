@@ -1,7 +1,7 @@
 'use strict';
 var errSource = require('path').basename(__filename),
   debug = require('debug')('email:' + errSource),
-  awsConfig = require('../../config/' + process.env.NODE_ENV).email.aws.ses, //Key can be set from environment variable or config.
+  awsConfig = require('../../config/' + process.env.NODE_ENV).aws.ses, //Key can be set from environment variable or config.
   nodeMailer = require('nodemailer'),
   ses = require('nodemailer-ses-transport');
 

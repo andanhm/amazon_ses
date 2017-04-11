@@ -49,34 +49,14 @@ Current API entry format:
 ```json
 {
   "error":{
-    "code": "", // Unique error code defined in order to debug error easly(CQ01)
-    "errSource": "", // File from where error occurred (queueCtrl2)
-    "function": "", // Function name (sendEmail)
-    "message": "", // Message of the error (Unable to fetch the queue information)
-    "description": "", // Description of the error message in detail
-    "time": "2016-12-19T19:23:59.617Z" // Error occurred time in ISO format
+    "code": "Unique error code defined in order to debug error easily(CQ01)",
+    "errSource": "File from where error occurred (app.js)",  
+    "function": "Function name (sendEmail)", 
+    "message": "Message of the error (Unable to fetch the queue information)", 
+    "description": "Description of the error message in detail", 
+    "time": "Error occurred time in ISO format (2016-12-19T19:23:59.617Z)"
   },
-  "data":{}
-}
-```
-
-## Check Queue-Man API Status
-Determines the q-man API is up and running with ok response
-
-| API ADDRESS | HTTP METHOD |
-| --- | --- |
-| /v2/q-man/ | GET |
-```curl
-$ curl -X GET -H "Cache-Control: no-cache" "http://localhost:9010/v2/q-man/"
-```
-**Response**
-
-```json
-{
-  "error": {},
-  "data": {
-    "status": true
-  },
+  "data":{},
   "version": "1.0.0"
 }
 ```
@@ -88,9 +68,6 @@ $ curl -X GET -H "Cache-Control: no-cache" "http://localhost:9010/v2/q-man/"
 Mocha is a feature-rich JavaScript test framework running on Node.js
 Allows unit test all the system APIs
 
-### Istanbul
-Tracks statement, branch, and function coverage and reverse-engineers line coverage with 100% fidelity.
-Allows to track coverage of all the system APIs
 
 ```sh
 $ npm test
@@ -115,7 +92,7 @@ Artillery scripts folder structure
     |__ artillery /
             |__ send /
                     |__ payload.csv
-	    	    	|__ send-email.json
+	    	    	      |__ send-email.json
 ```
 
 ### Postman
@@ -130,12 +107,12 @@ Postman Queue-Man API collection
 ## Directory structure
 ```
 - docker /
-    |__ Dockerfile
+    |__ DockerFile
 - scripts /
     |__ artillery /
             |__ send /
                     |__ payload.csv
-	    	    	|__ send-email.json
+	    	    	      |__ send-email.json
     |__ postman /
             |__ Amazon-SES.postman_collection
 - src/

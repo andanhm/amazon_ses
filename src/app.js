@@ -34,6 +34,7 @@ app.use(require('response-time')());
 //Create a middleware that adds a X-App-Version header to responses.
 app.use(function (req, res, next) {
     res.setHeader('X-App-Version', app.get('version'));
+    res.header('X-Server-Name', require('os').hostname());
     next();
 });
 
@@ -42,7 +43,6 @@ app.all(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.setHeader('Access-Control-Allow-Methods', 'POST,GET,PUT,DELETE,OPTIONS');
     res.setHeader('Access-Control-Max-Age', '60000');
-    res.setHeader('X-App-Version', app.get('version'));
     if (req.method === 'OPTIONS') {
         res.status(200).end();
     } else {

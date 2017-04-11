@@ -1,6 +1,7 @@
 {
     "multiples": 1,
     "port" : 8080,
+    "fromEmail" : "Amazon <success@simulator.amazonses.com>",
     "aws": {
         "ses": {
             "accessKeyId": "xxxxxxxxxx",
