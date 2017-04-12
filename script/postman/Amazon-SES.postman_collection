@@ -1,0 +1,34 @@
+{
+	"id": "7310a60a-e595-78e4-a9ff-8624494e5105",
+	"name": "Amazon-SES",
+	"description": "",
+	"order": [
+		"8ff35457-120c-643e-eca5-a1e6f3eefa58"
+	],
+	"folders": [],
+	"timestamp": 1492001027964,
+	"owner": "117794",
+	"public": false,
+	"requests": [
+		{
+			"id": "8ff35457-120c-643e-eca5-a1e6f3eefa58",
+			"headers": "",
+			"url": "localhost:8080",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "7310a60a-e595-78e4-a9ff-8624494e5105",
+			"data": null,
+			"dataMode": "params",
+			"name": "Home",
+			"description": "Amazone SES home page url to send email",
+			"descriptionFormat": "html",
+			"time": 1492001027913,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}

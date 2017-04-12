@@ -1,8 +1,8 @@
 'use strict';
-var appCtrl = require('./controller/index'),
-    emailCtrl = require('./controller/email');
+var appCtrl = require('./controller/indexCtrl'),
+    emailCtrl = require('./controller/emailCtrl');
 
 module.exports = function(app) {
   app.get('/status', appCtrl.checkHealth);
-  app.get('/send', appCtrl.checkHealth);
+  app.get('/send', emailCtrl.send);
 };

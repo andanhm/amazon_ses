@@ -10,6 +10,6 @@
         }
     },
     "db": {
-        "mongo": "mongodb://127.0.0.1:27017/email'?authSource=admin'"
+        "mongo": "mongodb://172.16.68.4/email'?authSource=admin'"
     }
 }

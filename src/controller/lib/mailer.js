@@ -45,10 +45,10 @@ Mailer.prototype.processEmail = function(objSendEmail, callback) {
     param.email = param.email.trim();
   }
 
-  var err = self.validateEmailReq(param);
+  var err = self.validateRequest(param);
 
   if (err !== 0) {
-    log.enterErrorLog(2002, errSource, 'validateEmailReq', 'Validation failed for this email', err);
+    log.enterErrorLog(2002, errSource, 'validateRequest', 'Validation failed for this request', err);
     return callback({
       message: err
     }, null);
@@ -56,11 +56,11 @@ Mailer.prototype.processEmail = function(objSendEmail, callback) {
   blacklistDB.isEmailBlacklisted(param.email, function(err, emailStatus) {
     debug('isEmailBlacklisted->emailStatus', emailStatus, err);
     if (err) {
-      return callback({}, null);
+      return callback(err, null);
     }
     if (emailStatus) {
       log.error(2002, errSource, 'isEmailBlacklisted', param.email + ' is blacklisted, hence not sending email to this recipient', '');
-      return callback({}, null);
+      return callback(err, null);
     }
     var messageObj = {
       body: param.body,
@@ -82,7 +82,6 @@ Mailer.prototype.processEmail = function(objSendEmail, callback) {
       }
       /* Checks the if email have any attachments and cleanup all the attachment file from the disk
          Its messy code we can do it better way but followed as per doCleanup common functions */
-
       if (messageObj.attachment) {
         var attachment = messageObj.attachment;
         var fileDir = config.attachmentFileDir;

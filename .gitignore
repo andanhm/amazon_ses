@@ -197,7 +197,6 @@ src/work.js
 ## Ignoring istanbul
 #################################
 src/coverage
-scripts/diagram
 
 ##################
 # NodeJS Loadtest modules #
@@ -207,5 +206,3 @@ artillery*
 ### Sonar ###
 #Sonar generated dir
 /.sonar/
-
-docker/*
