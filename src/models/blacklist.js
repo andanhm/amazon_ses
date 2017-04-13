@@ -7,17 +7,17 @@ var mongoose = require('mongoose'),
 
 /* Schema Definition */
 var blacklistSchema = new Schema({
-  email: {
-    type: String,
-    unique: true
-  },
-  emailFeedbackType: String,
-  blacklistTime: {
-    type: Date,
-    default: Date.now
-  }
-},{
-  collection: 'tblBlacklist'
+    email: {
+        type: String,
+        unique: true
+    },
+    emailFeedbackType: String,
+    blacklistTime: {
+        type: Date,
+        default: Date.now
+    }
+}, {
+    collection: 'tblBlacklist'
 });
 var BlacklistSchema = mongoose.model('Blacklist', blacklistSchema);
 

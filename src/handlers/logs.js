@@ -22,7 +22,6 @@ function getLogDate() {
     }
     return date + ' @ ' + hours + ':' + minutes + ' ' + suffix;
 }
-
 /**
  * Function to format text which needs to be written in the text file
  *
@@ -39,8 +38,8 @@ function enterErrorLog(errorCode, source, methodName, statement, description, re
         appVersion = appPackage.version,
         logDate = getLogDate();
     var errLog = '\n\n';
-    errLog += '** ' + logDate + '\n';
-    errLog += 'errorCode= '+ errorCode + '\n';
+    errLog += logDate + '\n';
+    errLog += 'errorCode= ' + errorCode + '\n';
     errLog += 'Server=' + serverName + '\n';
     errLog += 'Application=' + appName + '\n';
     errLog += 'Source=' + source + '\n';

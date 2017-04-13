@@ -32,13 +32,13 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 app.use(require('response-time')());
 
 //Create a middleware that adds a X-App-Version header to responses.
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     res.setHeader('X-App-Version', app.get('version'));
     res.header('X-Server-Name', require('os').hostname());
     next();
 });
 
-app.all(function (req, res, next) {
+app.all(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.setHeader('Access-Control-Allow-Methods', 'POST,GET,PUT,DELETE,OPTIONS');
@@ -53,6 +53,15 @@ app.all(function (req, res, next) {
  * API routes
  */
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', function(req, res) {
+    res.sendfile('public/index.html', { root: __dirname })
+});
+
+app.get('/favicon.ico', function(req, res) {
+    res.sendStatus(204);
+});
+
 require('./router.js')(app);
 /**
  * A background service to manage the queue
@@ -62,7 +71,7 @@ require('./router.js')(app);
 require('./handlers/mongo/mongoClient').connect();
 
 // catch 404 and forward to error handler
-app.use(function (req, res) {
+app.use(function(req, res) {
     res.status(404).send({
         error: {
             url: http.formatRequestUrl(req),
@@ -74,13 +83,13 @@ app.use(function (req, res) {
 });
 
 if (app.get('env') === 'development') {
-    app.use(function (error, req, res, next) {
+    app.use(function(error, req, res, next) {
         debug('http_status: %d, %s', error.status || 500, error.message);
         next(error);
     });
 }
 
-app.use(function (error, req, res) {
+app.use(function(error, req, res) {
     res.status(error.status || 500).send({
         error: {
             title: 'error',

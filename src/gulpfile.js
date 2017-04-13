@@ -1,6 +1,6 @@
 'use strict';
 var gulp = require('gulp'),
-    plumber = require('gulp-plumber'), 
+    plumber = require('gulp-plumber'),
     nodemon = require('gulp-nodemon'),
     eslint = require('gulp-eslint');
 
@@ -10,7 +10,7 @@ gulp.task('lint', function() {
     // So, it's best to have gulp ignore the directory as well.
     // Also, Be sure to return the stream from the task;
     // Otherwise, the task may end before the stream has finished.
-    return gulp.src(['**/*.js','!node_modules/**','!coverage/**'])
+    return gulp.src(['**/*.js', '!node_modules/**', '!coverage/**'])
         //Prevent pipe breaking caused by errors from gulp plugins
         .pipe(plumber())
         // eslint() attaches the lint output to the "eslint" property
@@ -24,7 +24,7 @@ gulp.task('lint', function() {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('default', [], function () {
+gulp.task('default', [], function() {
     nodemon({
             script: 'app.js',
             ext: 'html js',
@@ -33,7 +33,7 @@ gulp.task('default', [], function () {
                 'NODE_ENV': 'development'
             }
         })
-        .on('restart', ['lint'], function () {
+        .on('restart', ['lint'], function() {
             console.log('Queue man restart with changes');
         });
 });

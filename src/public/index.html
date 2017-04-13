@@ -2,49 +2,22 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Amazon SES</title>
-  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css'>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <script>
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function ($scope, $http) {
-      $scope.alert = false;
-      $scope.send = function () {
-        $scope.alert = true;
-        $scope.envelopeColor={'background-color': '#50505a'};
-        $scope.message = 'Sending....';
-        $http.get("/send")
-          .then(function (response) {
-            var rData = response.data;
-            if (rData.error) {
-              $scope.message = rData.error.message;
-              $scope.envelopeColor={'background-color': '#a94442'}
-            }
-          },function(error){
-
-          });
-      }
-    });
-  </script>
+    <meta charset="UTF-8">
+    <title>Amazon SES</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 </head>
 
-<body ng-app="myApp" ng-controller="myCtrl">
-  <form class="form">
-    <h2>Amazon SES Email</h2>
-    <p type="Name"><input placeholder="Write your name here.."></input>
-    </p>
-    <p type="Email"><input placeholder="Let us know how to contact you back.."></input>
-    </p>
-    <p type="Message"><input placeholder="What would you like to tell us.."></input>
-    </p>
-    <button ng-click="send()">Send Message</button>
-    <div ng-show="alert" ng-style="envelopeColor">
-      <span class="fa fa-envelope-o" ></span> {{message}}
-    </div>
-  </form>
+<body ng-app="SesApp">
+    <a href='send'> Send mail</a>
+    <ng-view></ng-view>
 </body>
+<script src="js/app.js"></script>
+<script src="js/routes/emailRoute.js"></script>
+<script src="js/controllers/emailCtrl.js"></script>
+<script src="js/services/emailService.js"></script>
 
 </html>

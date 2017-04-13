@@ -1,0 +1,15 @@
+<form class="form">
+    <h2>Amazon SES Email</h2>
+    <p type="Name"><input placeholder="Write your name here.." ng-model="name"></input>
+    </p>
+    <p type="Email"><input type="email" placeholder="Write your email here..." ng-model="email"></input>
+    </p>
+    <p type="Subject"><input placeholder="Subject of the subject here.." ng-model="subject"></input>
+    </p>
+    <p type="Message"><input placeholder="What would you like to tell us.." ng-model="message"></input>
+    </p>
+    <button ng-click="send()">Send Message</button>
+    <div ng-show="alert" ng-style="envelopeColor">
+        <span class="fa fa-envelope-o"></span> {{alertMessage}}
+    </div>
+</form>

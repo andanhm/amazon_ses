@@ -1,9 +1,9 @@
 'use strict';
 var errSource = require('path').basename(__filename),
-  debug = require('debug')('email:' + errSource),
-  awsConfig = require('../../config/' + process.env.NODE_ENV).aws.ses, //Key can be set from environment variable or config.
-  nodeMailer = require('nodemailer'),
-  ses = require('nodemailer-ses-transport');
+    debug = require('debug')('email:' + errSource),
+    awsConfig = require('../../config/' + process.env.NODE_ENV).aws.ses, //Key can be set from environment variable or config.
+    nodeMailer = require('nodemailer'),
+    ses = require('nodemailer-ses-transport');
 
 var transporter = nodeMailer.createTransport(ses(awsConfig));
 /**
@@ -11,8 +11,7 @@ var transporter = nodeMailer.createTransport(ses(awsConfig));
  * 
  * Main function of this file which is exported the object that will call functions from this library is scoped global
  */
-function SESMailer() {
-}
+function SESMailer() {}
 
 /**
  * Callback for email processed details / error details  
@@ -21,7 +20,6 @@ function SESMailer() {
  * @param  {Object} error Return if any required object missing / Error sending email from SES
  * @param  {Object} result Acknowledges status of the message
  **/
-
 /**
  * Composes an email message based on input data, and then immediately queues the message for sending.
  *
@@ -43,29 +41,29 @@ function SESMailer() {
  * @param {sendEmailCallback} callback Callback for email processed details / error details 
  */
 SESMailer.prototype.sendEmail = function(options, callback) {
-  transporter.sendMail({
-    from: options.from,
-    to: options.to,
-    html: options.message,
-    text: options.message,
-    subject: options.subject,
-    cc: options.cc,
-    bcc: options.bcc,
-    replyTo: options.replyTo,
-    attachments: options.attachments
-  }, function(err, emailResponse) {
-    debug('ASW email err %s emailResponse %s', err, emailResponse);
+    transporter.sendMail({
+        from: options.from,
+        to: options.to,
+        html: options.message,
+        text: options.message,
+        subject: options.subject,
+        cc: options.cc,
+        bcc: options.bcc,
+        replyTo: options.replyTo,
+        attachments: options.attachments
+    }, function(err, emailResponse) {
+        debug('ASW email err %s emailResponse %s', err, emailResponse);
 
-    if (err) {
-      return callback(err, null);
-    }
-    var responseMetadata = emailResponse ? {
-        messageId: emailResponse.messageId.split('@')[0]
-      } : emailResponse;
-    return callback(null, responseMetadata);
-  });
+        if (err) {
+            return callback(err, null);
+        }
+        var responseMetadata = emailResponse ? {
+            messageId: emailResponse.messageId.split('@')[0]
+        } : emailResponse;
+        return callback(null, responseMetadata);
+    });
 };
 
 exports.createClient = function createClient() {
-  return new SESMailer();
+    return new SESMailer();
 };

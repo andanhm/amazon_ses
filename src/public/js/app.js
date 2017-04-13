@@ -1,0 +1,1 @@
+var SesApp = angular.module('SesApp', ['ngRoute']);
