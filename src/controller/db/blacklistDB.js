@@ -44,7 +44,7 @@ function saveEmailBlacklist(email,emailFeedbackType, callback) {
  * 
  * @function isEmailBlacklisted
  * @param {String} email Email address
- * @param {isEmailBlacklistedCallback} callback Return two object error, result
+ * @param {isEmailBlacklistedCallback} callback Return two object error, status
  */
 function isEmailBlacklisted(email, callback) {
   EmailBlacklist.findOne({

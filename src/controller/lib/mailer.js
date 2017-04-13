@@ -4,7 +4,7 @@
  */
 var errSource = require('path').basename(__filename),
   debug = require('debug')('email:' + errSource),
-  config = require('../config/' + process.env.NODE_ENV),
+  config = require('../../config/' + process.env.NODE_ENV),
   path = require('path'),
   log = require('../../handlers/logs.js'),
   statusDB = require('../db/statusDB'),
@@ -75,10 +75,7 @@ Mailer.prototype.processEmail = function(objSendEmail, callback) {
     self.sendMail(messageObj, function(err, data) {
       if (err) {
         log.enterErrorLog('4004', errSource, 'sendMail', 'Error when sending to aws', 'Error when sending to AWS SES', err);
-        return callback({
-          requeue: true,
-          error: err
-        }, null);
+        return callback(err, null);
       }
       /* Checks the if email have any attachments and cleanup all the attachment file from the disk
          Its messy code we can do it better way but followed as per doCleanup common functions */
@@ -122,7 +119,7 @@ Mailer.prototype.sendMail = function(request, callback) {
   }
 
   debug('AWS SES Request %j', parameters);
-  var ses = require('./aws/ses'),
+  var ses = require('./ses'),
     mailer = ses.createClient();
   mailer.sendEmail(parameters, function(err, data) {
     if (err) {
