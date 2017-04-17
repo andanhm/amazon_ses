@@ -63,31 +63,30 @@ function isEmailBlacklisted(email, callback) {
     });
 }
 /**
- * Callback for getting the status of the email
+ * Callback for fetching all the ses email records
  * 
- * @callback isEmailBlacklistedCallback
+ * @callback getBlacklistCallback
  * @param {Object} err Returns status of the MongoDB record
- * @param {Boolean} status Returns the status of the email
+ * @param {Array<Object>} status Returns the record of the email
  */
 /**
  * Allows to fetch all record of the 
  * 
  * @function getBlacklist
- * @param {String} email Email address
- * @param {isEmailBlacklistedCallback} callback Return two object error, result
+ * @param {Object} query Search query to find the data
+ * @param {Object} fields Search query to filter the fields
+ * @param {getBlacklistCallback} callback Return two object error, result
  */
-function getBlacklist(query, callback) {
-    EmailBlacklist.find({}, function(err, blackListedEmail) {
+function getBlacklist(query, fields, callback) {
+
+    EmailBlacklist.find(query, fields, function(err, blackListedEmail) {
         if (err) {
-            debug('isEmailBlacklisted->Error in mongodb', err);
-            log.enterErrorLog(6010, errSource, 'isEmailBlacklisted', 'Failed to get the mongo email information', 'Failed to fetch the collection from mongo', err);
+            debug('getBlacklist->Error in mongodb', err);
+            log.enterErrorLog(6010, errSource, 'getBlacklist', 'Failed to get the mongo email information', 'Failed to fetch the collection from mongo', err);
             return callback(err, null);
         }
         debug('isEmailBlacklisted->self.mongoCon.fetchOne->', blackListedEmail);
-        if (blackListedEmail) {
-            return callback(null, true);
-        }
-        return callback(null, false);
+        return callback(null, blackListedEmail);
     });
 }
 

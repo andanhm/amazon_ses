@@ -2,7 +2,7 @@
 var Mailer = require('./lib/mailer'),
     mailer = new Mailer();
 /**
- * Ideally should return '{}' for Amazon-SES-health-check
+ * Ideally should return '{Object}' for email sent status
  * 
  * @api public
  * @method
@@ -23,6 +23,23 @@ function send(req, res) {
         });
     });
 }
+/**
+ * Ideally should return '{Object}' of email blacklisted
+ * 
+ * @api public
+ * @method
+ * @param  {Object} req The req object represents the HTTP request and has properties for the request query string, parameters, body, HTTP headers
+ * @param  {Object} res The res object represents the HTTP response that an Express app sends when it gets an HTTP request.
+ */
+function getBlacklisted(req, res) {
+    mailer.listEmailBlacklisted(function(error, response) {
+        return res.status(200).type('json').send({
+            error: error,
+            data: response
+        });
+    });
+}
 module.exports = {
-    send: send
+    send: send,
+    getBlacklisted: getBlacklisted
 }

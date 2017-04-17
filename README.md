@@ -60,8 +60,6 @@ Current API entry format:
   "version": "1.0.0"
 }
 ```
-
-```
 ## Unit Test
 
 ### Mocha

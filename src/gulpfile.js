@@ -26,7 +26,7 @@ gulp.task('lint', function() {
 
 gulp.task('default', [], function() {
     nodemon({
-            script: 'app.js',
+            script: 'index.js',
             ext: 'html js',
             ignore: ['cleanup.js'],
             env: {
@@ -34,7 +34,7 @@ gulp.task('default', [], function() {
             }
         })
         .on('restart', ['lint'], function() {
-            console.log('Queue man restart with changes');
+            console.log('Amazon SES restart with changes');
         });
 });
 

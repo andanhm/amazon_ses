@@ -3,7 +3,7 @@
  * Mailer process email
  */
 var errSource = require('path').basename(__filename),
-    debug = require('debug')('email:' + errSource),
+    debug = require('debug')('ses:' + errSource),
     config = require('../../config/' + process.env.NODE_ENV),
     path = require('path'),
     log = require('../../handlers/logs.js'),
@@ -62,31 +62,39 @@ Mailer.prototype.processEmail = function(objSendEmail, callback) {
             log.error(2002, errSource, 'isEmailBlacklisted', param.email + ' is blacklisted, hence not sending email to this recipient', '');
             return callback(err, null);
         }
+
         var messageObj = {
-            body: param.body,
+            from: config.fromEmail,
+            message: param.message,
             subject: param.subject,
-            toEmail: param.email,
-            toName: param.toname,
-            bcc: (param.bcc ? param.bcc : null),
-            reqStamp: new Date(),
+            to: param.name + '<' + param.email + '>',
+            bcc: param.bcc || '',
+            requestStamp: new Date(),
             attachment: param.attachment
         };
-
         self.sendMail(messageObj, function(err, data) {
             if (err) {
                 log.enterErrorLog('4004', errSource, 'sendMail', 'Error when sending to aws', 'Error when sending to AWS SES', err);
-                return callback(err, null);
+                messageObj.response = {
+                    requestId: err.requestId,
+                    message: err.message,
+                    time: err.time,
+                    code: err.code
+                };
+                messageObj.status = 'failed';
+            } else {
+                messageObj.messageId = data.messageId;
+                messageObj.status = 'success';
+                /* Checks the if email have any attachments and cleanup all the attachment file from the disk
+                   Its messy code we can do it better way but followed as per doCleanup common functions */
+                if (messageObj.attachment) {
+                    var attachment = messageObj.attachment;
+                    var fileDir = config.attachmentFileDir;
+                    var filePath = path.dirname(attachment.path);
+                    param = path.basename(filePath);
+                    self.doCleanup(param, fileDir, function() {});
+                }
             }
-            /* Checks the if email have any attachments and cleanup all the attachment file from the disk
-               Its messy code we can do it better way but followed as per doCleanup common functions */
-            if (messageObj.attachment) {
-                var attachment = messageObj.attachment;
-                var fileDir = config.attachmentFileDir;
-                var filePath = path.dirname(attachment.path);
-                param = path.basename(filePath);
-                self.doCleanup(param, fileDir, function() {});
-            }
-            messageObj.msgid = data.messageId;
             self.saveResponse(messageObj, function(err, result) {
                 return callback(err, result);
             });
@@ -104,24 +112,10 @@ Mailer.prototype.processEmail = function(objSendEmail, callback) {
  * @param {callback} callback Return two object error, result
  */
 Mailer.prototype.sendMail = function(request, callback) {
-    var toEmail = request.toEmail.toLowerCase(),
-        toName = request.toName ? request.toName : '';
-
-    var parameters = {
-        to: toName + '<' + toEmail + '>',
-        subject: request.subject,
-        message: request.body,
-        cc: ''
-    };
-
-    if (request.ticket) {
-        parameters.attachments = request.attachment;
-    }
-
-    debug('AWS SES Request %j', parameters);
+    debug('AWS SES Request %j', request);
     var ses = require('./ses'),
         mailer = ses.createClient();
-    mailer.sendEmail(parameters, function(err, data) {
+    mailer.sendEmail(request, function(err, data) {
         if (err) {
             return callback(err, null);
         }
@@ -141,8 +135,12 @@ Mailer.prototype.saveResponse = function(emailSentResponse, callback) {
             debug('Error in mongodb: ', err);
             log.enterErrorLog('4005', errSource, 'saveResponse', 'Failed to insert in mongo', 'Failed to insert in mongo', err);
             return callback({
-                requeue: false,
-                error: err
+                status: false,
+                code: 4005,
+                file: errSource,
+                function: 'saveResponse',
+                message: 'Failed to insert in mongo',
+                time: new Date()
             }, null);
         }
         debug('Inserted into mongo %j', result);
@@ -181,8 +179,7 @@ Mailer.prototype.validateRequest = function(parameters) {
  * @param {callback} callback Return two object error, result
  */
 Mailer.prototype.listEmailBlacklisted = function(callback) {
-
-    self.mongoCon.fetchAll(emailBlacklist.schema, {}, {
+    blacklistDB.getBlacklist({}, {
         _id: 0,
         __v: 0
     }, function(err, blackListedEmails) {

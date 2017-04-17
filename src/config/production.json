@@ -1,15 +1,23 @@
 {
     "multiples": 1,
     "port": 80,
-    "fromEmail" : "Amazon <success@simulator.amazonses.com>",
+    "fromEmail": "Amazon <success@simulator.amazonses.com>",
     "aws": {
         "ses": {
             "accessKeyId": "xxxxxxxxxx",
             "secretAccessKey": "xxxxxxx",
             "region": "us-east-1"
+        },
+        "sqs": {
+            "apiVersion": "2012-11-05",
+            "accessKeyId": "xxxxxxxxxx",
+            "secretAccessKey": "xxxxxxx",
+            "region": "us-east-1",
+            "queueUrl": ""
         }
     },
+
     "db": {
-        "mongo": "mongodb://127.0.0.1:27017/email'?authSource=admin'"
+        "mongo": "mongodb://127.0.0.1/amazone_ses?authSource=admin"
     }
 }

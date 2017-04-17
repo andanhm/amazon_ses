@@ -1,4 +1,4 @@
-# Refer to https://github.com/github/gitignore for more samples
+# Refer to https://github.com/github/gitignore 
 
 # Windows image file caches
 Thumbs.db
@@ -160,7 +160,7 @@ ipch/
 # ReSharper is a .NET coding add-in
 _ReSharper*
 
-# Installshield output folder
+# Install shield output folder
 [Ee]xpress
 
 # DocProject is a documentation generator add-in
@@ -234,7 +234,6 @@ bower_components
 #################################
 ## Ignoring files in this project
 #################################
-src/queueManREPL.js
 src/work.js
 
 #################################

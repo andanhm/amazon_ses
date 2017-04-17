@@ -58,9 +58,10 @@ app.get('/', function(req, res) {
     res.sendfile('public/index.html', { root: __dirname })
 });
 
-app.get('/favicon.ico', function(req, res) {
-    res.sendStatus(204);
-});
+var favicon = require('serve-favicon');
+
+//use favicon icon path to access in application.
+app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.ico')));
 
 require('./router.js')(app);
 /**

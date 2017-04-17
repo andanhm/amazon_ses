@@ -7,27 +7,25 @@ var mongoose = require('mongoose'),
 
 /* Schema Definition */
 var statusSchema = new Schema({
-    body: String,
-    subject: String,
-    fromEmail: String,
-    fromName: String,
-    toEmail: String,
-    toName: String,
-    bcc: String,
-    tid: String,
+    body: { type: String, default: '' },
+    subject: { type: String, default: '' },
+    from: { type: String, default: '' },
+    to: { type: String, default: '' },
+    bcc: { type: String, default: '' },
     response: {
         type: Schema.Types.Mixed,
         default: {}
     },
-    msgid: String,
-    reqStamp: {
+    messageId: { type: String, default: '' },
+    requestStamp: {
         type: Date,
         default: Date.now
     },
     attachment: {
         type: Schema.Types.Mixed,
         default: {}
-    }
+    },
+    status: String
 }, {
     minimize: false,
     collection: 'tblStatus'

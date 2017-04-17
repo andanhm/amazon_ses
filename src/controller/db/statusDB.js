@@ -18,17 +18,16 @@ var errSource = require('path').basename(__filename),
  */
 function saveEmailStatusRecord(emailRequestObject, callback) {
     var emailStatus = new EmailStatus({
-        body: emailRequestObject.body,
-        subject: emailRequestObject,
-        fromEmail: emailRequestObject,
-        fromName: emailRequestObject,
-        toEmail: emailRequestObject,
-        toName: emailRequestObject,
-        bcc: emailRequestObject,
-        tid: emailRequestObject,
-        response: {},
-        msgid: emailRequestObject.msgid,
-        attachment: emailRequestObject.attachment
+        body: emailRequestObject.message,
+        subject: emailRequestObject.subject,
+        from: emailRequestObject.from,
+        to: emailRequestObject.to,
+        bcc: emailRequestObject.bcc,
+        response: emailRequestObject.response,
+        messageId: emailRequestObject.messageId,
+        requestStamp: emailRequestObject.requestStamp,
+        attachment: emailRequestObject.attachment,
+        status: emailRequestObject.status
     });
     // Call the built-in save method to save to the database
     emailStatus.save(function(err, result) {
@@ -40,7 +39,6 @@ function saveEmailStatusRecord(emailRequestObject, callback) {
         return callback(null, result);
     });
 }
-
 module.exports = {
     saveEmailStatusRecord: saveEmailStatusRecord
 }

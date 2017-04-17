@@ -50,7 +50,7 @@ SESMailer.prototype.sendEmail = function(options, callback) {
         cc: options.cc,
         bcc: options.bcc,
         replyTo: options.replyTo,
-        attachments: options.attachments
+        attachments: options.attachment
     }, function(err, emailResponse) {
         debug('ASW email err %s emailResponse %s', err, emailResponse);
 
