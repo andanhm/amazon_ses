@@ -1,7 +1,7 @@
 'use strict';
 var errSource = require('path').basename(__filename),
     log = require('../../handlers/logs.js'),
-    debug = require('debug')('email:' + errSource),
+    debug = require('debug')('ses:' + errSource),
     EmailBlacklist = require('../../models/blacklist').BlacklistSchema;
 
 /**
@@ -78,7 +78,6 @@ function isEmailBlacklisted(email, callback) {
  * @param {getBlacklistCallback} callback Return two object error, result
  */
 function getBlacklist(query, fields, callback) {
-
     EmailBlacklist.find(query, fields, function(err, blackListedEmail) {
         if (err) {
             debug('getBlacklist->Error in mongodb', err);

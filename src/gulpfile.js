@@ -2,6 +2,7 @@
 var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     nodemon = require('gulp-nodemon'),
+    del = require('del'),
     eslint = require('gulp-eslint');
 
 // ESLint Task
@@ -10,7 +11,7 @@ gulp.task('lint', function() {
     // So, it's best to have gulp ignore the directory as well.
     // Also, Be sure to return the stream from the task;
     // Otherwise, the task may end before the stream has finished.
-    return gulp.src(['**/*.js', '!node_modules/**', '!coverage/**'])
+    return gulp.src(['**/*.js', '!node_modules/**', '!coverage/**', '!public/**'])
         //Prevent pipe breaking caused by errors from gulp plugins
         .pipe(plumber())
         // eslint() attaches the lint output to the "eslint" property
@@ -24,18 +25,23 @@ gulp.task('lint', function() {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('default', [], function() {
+gulp.task('default', ['lint', 'clean'], function() {
     nodemon({
             script: 'index.js',
             ext: 'html js',
             ignore: ['cleanup.js'],
             env: {
-                'NODE_ENV': 'development'
+                'NODE_ENV': 'development',
+                'PORT': 8080
             }
         })
-        .on('restart', ['lint'], function() {
+        .on('restart', ['lint', 'clean'], function() {
             console.log('Amazon SES restart with changes');
         });
+});
+
+gulp.task('clean', function() {
+    return del(['uploads/**']);
 });
 
 module.exports = gulp;

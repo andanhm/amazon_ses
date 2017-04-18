@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 var blacklistSchema = new Schema({
     email: {
         type: String,
+        index: true,
         unique: true
     },
     emailFeedbackType: String,

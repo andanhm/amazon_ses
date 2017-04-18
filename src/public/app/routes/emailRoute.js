@@ -1,8 +1,8 @@
 'use strict';
 
 SesApp.config([
-    '$routeProvider',
-    function($routeProvider) {
+    '$routeProvider', '$locationProvider',
+    function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 controller: 'DashboardController',
@@ -17,9 +17,13 @@ SesApp.config([
                 templateUrl: 'templates/send_email.html'
             })
             .when('/statistics', {
-                controller: 'EmailController',
-                templateUrl: 'templates/email_statistics.html'
+                controller: 'StatisticsController',
+                templateUrl: 'templates/statistics.html'
             })
             .otherwise({ redirectTo: '/' });
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
     }
 ]);

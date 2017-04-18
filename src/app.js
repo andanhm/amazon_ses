@@ -2,6 +2,7 @@
 var debug = require('debug')('q-man:app'),
     config = require('./config/' + process.env.NODE_ENV),
     http = require('./handlers/http'),
+    multer = require('multer'),
     path = require('path');
 
 process.env.PORT = process.env.PORT || config.port;
@@ -27,6 +28,7 @@ app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
     extended: true
 }));
+app.use(multer({ dest: path.join(__dirname, 'uploads') }).any());
 
 //Create a middleware that adds a X-Response-Time header to responses.
 app.use(require('response-time')());

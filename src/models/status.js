@@ -10,7 +10,7 @@ var statusSchema = new Schema({
     body: { type: String, default: '' },
     subject: { type: String, default: '' },
     from: { type: String, default: '' },
-    to: { type: String, default: '' },
+    to: { type: String, default: '', index: true },
     bcc: { type: String, default: '' },
     response: {
         type: Schema.Types.Mixed,

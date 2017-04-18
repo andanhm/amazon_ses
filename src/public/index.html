@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="SesApp">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Amazon SES Node js example">
     <meta name="author" content="Andan H M">
-    <title>Amazon SES - Home Page</title>
+    <title ng-bind='title'> </title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -17,11 +17,11 @@
     <!-- Custom Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.js"></script>
 </head>
 
-<body ng-app="SesApp">
+<body>
 
     <div id="wrapper">
 
@@ -32,14 +32,14 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
-                        <a href="#home"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    <li>
+                        <a href="home"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="#send"><i class="fa fa-fw fa-edit"></i> Send Email</a>
+                        <a href="send"><i class="fa fa-fw fa-edit"></i> Send Email</a>
                     </li>
                     <li>
-                        <a href="#statitics"><i class="fa fa-fw fa-table"></i>Statistics</a>
+                        <a href="statistics"><i class="fa fa-fw fa-table"></i>Statistics</a>
                     </li>
                 </ul>
             </div>
@@ -74,9 +74,11 @@
     <script src="app/app.js"></script>
     <script src="app/routes/emailRoute.js"></script>
     <script src="app/controllers/emailCtrl.js"></script>
+    <script src="app/controllers/statisticsCtrl.js"></script>
     <script src="app/controllers/dashboardCtrl.js"></script>
     <script src="app/services/emailService.js"></script>
     <script src="app/services/dashboardService.js"></script>
+    <script src="app/services/TitleService.js"></script>
 </body>
 
 </html>

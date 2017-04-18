@@ -43,7 +43,7 @@ function getStatusText(statusCode) {
  * @param  {Object} errorObject Response error body object that need to be responded
  * @param  {Object} dataObject Response body object that need to be responded
  */
-function httpResponse(res, statusCode, errorObject, dataObject, apiName) {
+function httpResponse(res, statusCode, errorObject, dataObject) {
     return res.status(statusCode).type('json').send({
         status: statusCode,
         error: errorObject ? errorObject : {},

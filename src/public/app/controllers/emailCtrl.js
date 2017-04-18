@@ -1,4 +1,28 @@
-SesApp.controller('EmailController', ['$scope', 'EmailService', function($scope, EmailService) {
+'use strict';
+SesApp.directive('fileUpload', function() {
+    return {
+        scope: true, //create a new scope
+        link: function(scope, el, attrs) {
+            el.bind('change', function(event) {
+                var files = event.target.files;
+                //iterate files since 'multiple' may be specified on the element
+                for (var i = 0; i < files.length; i++) {
+                    //emit event upward
+                    scope.$emit('fileSelected', { file: files[i] });
+                }
+            });
+        }
+    }
+});
+
+SesApp.controller('EmailController', ['$scope', 'EmailService', 'Title', function($scope, EmailService, Title) {
+    Title.set('Send Email');
+    $scope.files = [];
+    $scope.$on('fileSelected', function(event, args) {
+        $scope.$apply(function() {
+            $scope.files.push(args.file);
+        });
+    });
     $scope.send = function() {
         $scope.alert = 'alert alert-info alert-dismissable';
         $scope.alertMessage = 'Sending....';
@@ -9,7 +33,7 @@ SesApp.controller('EmailController', ['$scope', 'EmailService', function($scope,
             message: $scope.message
         }
         if (data.email) {
-            EmailService.sendEmail(data).then(
+            EmailService.sendEmail(data, $scope.files).then(
                 function(response) {
                     if (response.error) {
                         $scope.alertMessage = 'Unable to send email. Try again later!!!';

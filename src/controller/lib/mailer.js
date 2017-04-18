@@ -9,8 +9,7 @@ var errSource = require('path').basename(__filename),
     log = require('../../handlers/logs.js'),
     statusDB = require('../db/statusDB'),
     blacklistDB = require('../db/blacklistDB'),
-    querystring = require('querystring'),
-    childProcess = require('child_process'),
+    fs = require('fs'),
     self = {};
 
 /**
@@ -85,15 +84,15 @@ Mailer.prototype.processEmail = function(objSendEmail, callback) {
             } else {
                 messageObj.messageId = data.messageId;
                 messageObj.status = 'success';
-                /* Checks the if email have any attachments and cleanup all the attachment file from the disk
+            }
+            /* Checks the if email have any attachments and cleanup all the attachment file from the disk
                    Its messy code we can do it better way but followed as per doCleanup common functions */
-                if (messageObj.attachment) {
-                    var attachment = messageObj.attachment;
-                    var fileDir = config.attachmentFileDir;
-                    var filePath = path.dirname(attachment.path);
-                    param = path.basename(filePath);
-                    self.doCleanup(param, fileDir, function() {});
-                }
+            if (messageObj.attachment) {
+                var attachment = messageObj.attachment;
+                attachment.forEach(function(file) {
+                    var fileName = file.filename;
+                    self.doCleanup(fileName);
+                });
             }
             self.saveResponse(messageObj, function(err, result) {
                 return callback(err, result);
@@ -222,76 +221,46 @@ Mailer.prototype.processFile = function(file, callback) {
  * Delete all the uncompressed files
  *
  * @memberof Mailer.prototype
- * @param {String} param File name
- * @param {callback} callback Return the response of shell execution
+ * @param {String} filename File name
  */
-Mailer.prototype.doCleanup = function(param, dirName, callback) {
-    var filePath = path.join(__dirname, '../', dirName, param);
-    debug('doTicketCleanup->', 'rm -Rf ' + filePath);
-    childProcess.exec('rm -Rf ' + filePath, function(err, stdout, stderr) {
-        if (err) {
-            return callback(err);
+Mailer.prototype.doCleanup = function(filename) {
+    var filePath = path.join(__dirname, '../../', 'uploads', filename);
+    debug('doCleanup', filePath);
+    fs.unlink(filePath, function(err) {
+        if (err && err.code == 'ENOENT') {
+            debug('doCleanup', 'File does not exist, wont remove it.');
+        } else if (err) {
+            debug('doCleanup', 'Error occurred while trying to remove file');
+        } else {
+            debug('doCleanup', 'File removed');
         }
-
-        if (stderr) {
-            return callback(stderr);
-        }
-
     });
 };
 /**
  * Gets the email status information from the MongoDB based on the msgid,email,tid
  *
  * @memberof Mailer.prototype
- * @param {String} query HTTP get request parameter
+ * @param {String} params Email checking status object
  * @param {callback} callback Return status of the email information
  */
-Mailer.prototype.getStatus = function(query, callback) {
-    var params = querystring.parse(query);
-
-    // if none of the parameters are present, return error
-    if (typeof(params.msgid) == 'undefined' && typeof(params.tid) == 'undefined' && typeof(params.email) == 'undefined') {
-        return callback(null, 'result=false&msgid=0&errno=12');
-    }
-
+Mailer.prototype.getStatus = function(params, callback) {
     // if a parameter is present, it should have a non-empty value
     if (typeof(params.msgid) !== 'undefined' && params.msgid === '') {
-        return callback(null, 'result=false&msgid=0&errno=12');
-    }
-    if (typeof(params.tid) !== 'undefined' && params.tid === '') {
-        return callback(null, 'result=false&msgid=0&errno=12');
+        return callback({ message: 'Message Id not passed' }, null);
     }
     if (typeof(params.email) !== 'undefined' && params.email === '') {
-        return callback(null, 'result=false&msgid=0&errno=12');
+        return callback({ message: 'Email address not passed' }, null);
     }
 
     var search = {};
 
     if (params.msgid) {
         search.msgid = params.msgid;
-    } else if (params.tid) {
-        search.tid = params.tid;
     } else {
-        search.toEmail = params.email;
+        search.email = params.email;
     }
-    // query mongo and sort by insStamp
-    self.mongoCon.fetchAll(emailStatus.schema, search, {
-        app: 0,
-        __v: 0
-    }, {
-        sort: {
-            insStamp: -1
-        }
-    }, function(err, resultCollection) {
-        if (err) {
-            debug('Error in fetch email information from mongo ', err);
-            return callback(null, 'result=false&msgId=' + params + '&errno=1');
-        }
-        if (resultCollection === null) {
-            return callback(null, 'result=false&msgId=' + params + '&errno=13');
-        }
-        return callback(null, resultCollection);
-    });
+    // TODO: Need to implement get email status report
+    return callback(null, []);
 };
 
 /**
@@ -300,34 +269,21 @@ Mailer.prototype.getStatus = function(query, callback) {
  * @memberof Mailer.prototype
  * @param {callback} callback Return two object error, result
  */
-Mailer.prototype.removeEmailFromBlacklist = function(query, callback) {
-    var params = querystring.parse(query);
+Mailer.prototype.removeEmailFromBlacklist = function(email, callback) {
 
     // if none of the parameters are present, return error
-    if (typeof(params.email) == 'undefined') {
+    if (typeof(email) == 'undefined') {
         return callback(null, 'result=false&msgid=0&errno=13');
     }
     // if a parameter is present, it should have a non-empty value
-    if (typeof(params.email) !== 'undefined' && params.email === '') {
+    if (typeof(email) !== 'undefined' && email === '') {
         return callback(null, 'result=false&email=0&errno=13');
     }
 
     var deleteQuery = {};
-
-    if (params.email) {
-        deleteQuery.email = params.email;
-    }
-
-    self.mongoCon.removeQuery(emailBlacklist.schema, deleteQuery, function(err, result) {
-        if (err) {
-            debug('Error in mongodb->removeEmailFromBlacklist: ', err);
-            log.enterErrorLog('6011', errSource, 'removeEmailFromBlacklist', 'Failed to get the mongo email information', 'Failed to fetch the collection from mongo', err);
-            return callback(err, null);
-        }
-        //Remove the specified members from the set stored at key (email)
-        return callback(null, 'ok');
-    });
-
+    deleteQuery.email = email;
+    // TODO: Need to implement delete email from the blacklist
+    return callback(null, { status: true, message: 'Removed from blacklist' });
 };
 
 module.exports = Mailer;
