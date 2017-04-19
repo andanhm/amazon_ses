@@ -1,6 +1,6 @@
 'use strict';
 var errSource = require('path').basename(__filename),
-    debug = require('debug')('email:' + errSource),
+    debug = require('debug')('ses:' + errSource),
     sqs = require('../controller/lib/sqs'),
     log = require('../handlers/logs'),
     async = require('async');

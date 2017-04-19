@@ -1,13 +1,9 @@
 'use strict';
-var debug = require('debug')('q-man:app'),
-    config = require('./config/' + process.env.NODE_ENV),
+var errSource = require('path').basename(__filename),
+    debug = require('debug')('ses:' + errSource),
     http = require('./handlers/http'),
     multer = require('multer'),
     path = require('path');
-
-process.env.PORT = process.env.PORT || config.port;
-
-process.env.VERSION = require('./package.json').version || 'undefined';
 
 debug('environment: ' + process.env.NODE_ENV);
 debug('version: ' + process.env.VERSION);

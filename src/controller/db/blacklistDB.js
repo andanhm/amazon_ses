@@ -84,13 +84,37 @@ function getBlacklist(query, fields, callback) {
             log.enterErrorLog(6010, errSource, 'getBlacklist', 'Failed to get the mongo email information', 'Failed to fetch the collection from mongo', err);
             return callback(err, null);
         }
-        debug('isEmailBlacklisted->self.mongoCon.fetchOne->', blackListedEmail);
         return callback(null, blackListedEmail);
+    });
+}
+/**
+ * Callback for deleting blacklist from the ses blacklist
+ * 
+ * @callback getBlacklistCallback
+ * @param {Object} err Returns status of the MongoDB record
+ * @param {Array<Object>} status Returns the status of the delete
+ */
+/**
+ * Allows to delete the email from the blacklist 
+ * 
+ * @function getBlacklist
+ * @param {String} email Email address need to remove from the blacklist
+ * @param {getBlacklistCallback} callback Return two object error, result
+ */
+function removeEmailFromBlacklist(email, callback) {
+    EmailBlacklist.remove({ email: email }, function(err, status) {
+        if (err) {
+            debug('getBlacklist->Error in mongodb', err);
+            log.enterErrorLog(6010, errSource, 'removeEmailFromBlacklist', 'Failed to remove the mongo email information', 'Failed to remove the collection from mongo', err);
+            return callback(err, null);
+        }
+        return callback(null, status);
     });
 }
 
 module.exports = {
     saveEmailBlacklist: saveEmailBlacklist,
     isEmailBlacklisted: isEmailBlacklisted,
-    getBlacklist: getBlacklist
+    getBlacklist: getBlacklist,
+    removeEmailFromBlacklist: removeEmailFromBlacklist
 }

@@ -41,7 +41,7 @@ function SESMailer() {}
  * @param {sendEmailCallback} callback Callback for email processed details / error details 
  */
 SESMailer.prototype.sendEmail = function(options, callback) {
-    // return callback(null, 'ok');
+    return callback(null, 'ok');
     transporter.sendMail({
         from: options.from,
         to: options.to,

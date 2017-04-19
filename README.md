@@ -13,7 +13,7 @@ To run the project in development mode (environment: development), you need to c
 $ npm start
 ```
 
-## Check Queue-Man API Status
+## Check Amazon SES API Status
 Determines the SES API is up and running with ok response
 
 
@@ -43,7 +43,7 @@ Current API entry format:
 | Bad Request (422) | The request is well formed, but was unable to be completed or validated due to business logic constraints, missing data, etc.  |
 | Internal Server Error (500) | The server encountered an unexpected condition which prevented it from fulfilling the request. |
 
-# Queue API
+# Amazon SES API
 
 ## HTTP Response
 ```json
@@ -52,7 +52,7 @@ Current API entry format:
     "code": "Unique error code defined in order to debug error easily(CQ01)",
     "errSource": "File from where error occurred (app.js)",  
     "function": "Function name (sendEmail)", 
-    "message": "Message of the error (Unable to fetch the queue information)", 
+    "message": "Message of the error (Unable to fetch the blacklist information)", 
     "description": "Description of the error message in detail", 
     "time": "Error occurred time in ISO format (2016-12-19T19:23:59.617Z)"
   },
@@ -72,29 +72,8 @@ $ npm test
 ```
 
 
-## Load test script
-### Artillery
-Artillery is a simple but powerful load testing toolkit.
-
-```sh
-$ sudo npm install -g artillery
-```
-
-**Sending email**
-
-
-Artillery scripts folder structure
-
-```
-- scripts /
-    |__ artillery /
-            |__ send /
-                    |__ payload.csv
-	    	    	      |__ send-email.json
-```
-
 ### Postman
-Postman Queue-Man API collection
+Postman Amazon SES API collection
 
 ```
 - scripts /
@@ -107,10 +86,6 @@ Postman Queue-Man API collection
 - docker /
     |__ DockerFile
 - scripts /
-    |__ artillery /
-            |__ send /
-                    |__ payload.csv
-	    	    	      |__ send-email.json
     |__ postman /
             |__ Amazon-SES.postman_collection
 - src/
@@ -127,15 +102,10 @@ Postman Queue-Man API collection
                 |__ mongoClient.js
           |__ logs.js
   |__ service /
+          |__ sqsMatrixService.js
   |__ routes.js    
-  |__ routes /
-        |__ queueRoutes.js
-        |__ clientRoutes.js
   |__ test /
-	      |__ test.apiHealth.js     
-	      |__ test.category.js     
-	      |__ test.manage.js     
-	      |__ test.withoutCategory.js     
+	      |__ test.email.js     
   |__ gulpfile.js
   |__ cleanup.js
   |__ package.json
@@ -157,13 +127,13 @@ Amazon ses uses a number of open source projects to work properly:
 ### Dev Tech
 Amazon SES uses a number of open source projects to make development faster, efficient and automate the build process:
 
-* [eslint] - A pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript. Maintain your code quality with ease.!
+* [Nodemailer] - Nodemailer is a module for Node.js applications to allow easy as cake email sending. 
+* [eslint] - A plumbable and configurable linter tool for identifying and reporting on patterns in JavaScript. Maintain your code quality with ease.!
 * [gulp] - Gulp is a toolkit for automating painful or time-consuming tasks in your development work flow, so you can stop messing around and build something.
 * [mocha] - A test framework running on node.js and the browser which runs tests serially, mapping uncaught exceptions to the correct test cases.
 * [nodemon] - Nodemon is a utility that will monitor for any changes in your source and automatically restart your server.
 * [should] - should is an expressive, readable, framework-agnostic assertion library.
 * [supertest] - Super-agent driven library for testing node.js HTTP servers using a fluent API
-* [istanbul] - A JavaScript code coverage tool written in JS
 
 ### Installation - Testing
 
@@ -174,7 +144,7 @@ Amazon SES uses a number of open source projects to make development faster, eff
 Install the dependencies and dev dependencies and start the server.
 
 ```sh
-$ cd queue-man\src
+$ cd src
 $ npm install
 $ npm start
 ```
@@ -193,26 +163,18 @@ $ gulp
 ```
 
 ## TODO
-* User priority checking API need to be implemented
-* TS / IS an API check whether user came from queue system or not 
-* Who is consuming queue data after dumping data in to the Redis?
-
-License
-----
-© 
+* Need to need high efficiency of sending email use RabbitMQ 
+* Charts to see the success / failure email delivery status  
 
 [node.js]: <http://nodejs.org>
 [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
 [Express]: <http://expressjs.com>
 [MongoDB]: <https://docs.mongodb.com/>
 [AngularJS]: <http://angularjs.org>
-[Redis]: <https://redis.io/>
-[RabbitMQ]: <https://www.rabbitmq.com/>
 [eslint]: <http://eslint.org/>
 [gulp]: <http://gulpjs.com/>
 [mocha]: <https://mochajs.org/>
 [nodemon]: <https://nodemon.io/>
 [should]: <https://shouldjs.github.io/>
 [supertest]: <https://github.com/visionmedia/supertest>
-[istanbul]:<http://gotwarlost.github.io/istanbul/>
-[rabbitmq-node]:<https://stash.bms.bz/projects/LIB/repos/queuelib-node/>
+[Nodemailer]:<https://nodemailer.com/>

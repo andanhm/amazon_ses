@@ -8,24 +8,14 @@
     <meta name="description" content="Amazon SES Node js example">
     <meta name="author" content="Andan H M">
     <title ng-bind='title'> </title>
-    <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' />
     <script src="js/angular.min.js"></script>
     <script src="js/angular-route.js"></script>
 </head>
 
 <body>
-
     <div id="wrapper">
-
-        <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">Amazon SES</a>
@@ -33,52 +23,33 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="home"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a href="send">Send Email</a>
                     </li>
                     <li>
-                        <a href="send"><i class="fa fa-fw fa-edit"></i> Send Email</a>
+                        <a href="email">Email status</a>
                     </li>
                     <li>
-                        <a href="statistics"><i class="fa fa-fw fa-table"></i>Statistics</a>
+                        <a href="blacklist">Blacklisted Email</a>
                     </li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </nav>
 
         <div id="page-wrapper">
-
             <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            Dashboard
-                        </h1>
-                    </div>
-                </div>
-
                 <ng-view></ng-view>
-
             </div>
-            <!-- /.container-fluid -->
-
         </div>
-        <!-- /#page-wrapper -->
-
     </div>
 
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
     <script src="app/app.js"></script>
-    <script src="app/routes/emailRoute.js"></script>
-    <script src="app/controllers/emailCtrl.js"></script>
-    <script src="app/controllers/statisticsCtrl.js"></script>
-    <script src="app/controllers/dashboardCtrl.js"></script>
-    <script src="app/services/emailService.js"></script>
-    <script src="app/services/dashboardService.js"></script>
-    <script src="app/services/TitleService.js"></script>
+    <!--<script src="app/configs/app.config.js"></script>-->
+    <script src="app/routes/email.route.js"></script>
+    <script src="app/controllers/email.controller.js"></script>
+    <script src="app/controllers/blacklist.controller.js"></script>
+    <script src="app/services/email.service.js"></script>
+    <script src="app/services/blacklist.service.js"></script>
+    <script src="app/services/title.service.js"></script>
 </body>
 
 </html>

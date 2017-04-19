@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VERSION="1.0.0"
-APPNAME="amazone-ses"
+APPNAME="amazon-ses"
 
 rsync -av -r -c --progress ./src ./docker --exclude node_modules --exclude npm_debug.log --delete-excluded
 

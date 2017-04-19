@@ -1,0 +1,35 @@
+<div class="row" ng-init="get()">
+    <div ng-show="alert" ng-class="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong></strong>{{alertMessage}}
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Blacklisted Email</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Type</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="blacklist in blacklists">
+                                <td>{{blacklist.email}}</td>
+                                <td>{{blacklist.type}}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-xs" ng-click="delete(blacklist.email)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

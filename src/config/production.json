@@ -18,6 +18,6 @@
     },
 
     "db": {
-        "mongo": "mongodb://127.0.0.1/amazone_ses?authSource=admin"
+        "mongo": "mongodb://127.0.0.1/amazon_ses?authSource=admin"
     }
 }

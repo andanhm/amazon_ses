@@ -6,13 +6,17 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'testing'
     process.env.DEBUG = process.env.DEBUG || 'app,express:application,info,ses:*,mongodb';
 }
 
-var debug = require('debug')('q-man:app'),
-    errSource = require('path').basename(__filename),
+var errSource = require('path').basename(__filename),
+    debug = require('debug')('ses:' + errSource),
     log = require('./handlers/logs'),
     cluster = require('cluster'),
     numCPUs = require('os').cpus().length,
     app = require('./app'),
     config = require('./config/' + process.env.NODE_ENV);
+
+process.env.PORT = process.env.PORT || config.port;
+
+process.env.VERSION = require('./package.json').version || '1.0.0';
 
 debug('environment: ' + process.env.NODE_ENV);
 debug('version: ' + process.env.VERSION);

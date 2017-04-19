@@ -5,20 +5,20 @@ SesApp.config([
     function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
-                controller: 'DashboardController',
-                templateUrl: 'templates/dashboard.html'
-            })
-            .when('/home', {
-                controller: 'DashboardController',
-                templateUrl: 'templates/dashboard.html'
+                controller: 'EmailController',
+                templateUrl: 'templates/send_email.html'
             })
             .when('/send', {
                 controller: 'EmailController',
                 templateUrl: 'templates/send_email.html'
             })
-            .when('/statistics', {
-                controller: 'StatisticsController',
-                templateUrl: 'templates/statistics.html'
+            .when('/email', {
+                controller: 'EmailController',
+                templateUrl: 'templates/email_request.html'
+            })
+            .when('/blacklist', {
+                controller: 'BlacklistController',
+                templateUrl: 'templates/blacklist.html'
             })
             .otherwise({ redirectTo: '/' });
         $locationProvider.html5Mode({

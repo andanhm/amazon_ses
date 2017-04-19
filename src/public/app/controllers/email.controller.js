@@ -23,6 +23,23 @@ SesApp.controller('EmailController', ['$scope', 'EmailService', 'Title', functio
             $scope.files.push(args.file);
         });
     });
+    $scope.emails = [];
+    $scope.emailRequest = function() {
+        EmailService.getEmails().then(
+            function(response) {
+                if (response.error) {
+                    $scope.emails = 'Unable to send email. Try again later!!!';
+                    $scope.alert = 'alert alert-danger alert-dismissable';
+                } else {
+                    $scope.emails = response.data;
+                }
+            },
+            function() {
+                $scope.alertMessage = 'Sorry for the inconvenience. we are fixing a temporary glitch. Please re-try in mint';
+                $scope.alert = 'alert alert-warning alert-dismissable';
+            });
+    }
+
     $scope.send = function() {
         $scope.alert = 'alert alert-info alert-dismissable';
         $scope.alertMessage = 'Sending....';

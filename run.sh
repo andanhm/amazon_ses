@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VERSION="1.0.0"
-APPNAME="amazone-ses"
+APPNAME="amazon-ses"
 
 SOURCE=$(pwd)/src
 NODE_ENV=${1-"development"}

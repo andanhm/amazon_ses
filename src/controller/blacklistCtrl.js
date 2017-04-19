@@ -25,7 +25,7 @@ function getBlacklisted(req, res) {
  * @param  {Object} res The res object represents the HTTP response that an Express app sends when it gets an HTTP request.
  */
 function removeBlacklisted(req, res) {
-    blacklistDB.getBlacklist(function(error, response) {
+    blacklistDB.removeEmailFromBlacklist(function(error, response) {
         return res.status(200).type('json').send({
             error: error,
             data: response

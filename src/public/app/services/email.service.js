@@ -28,7 +28,7 @@ SesApp.factory('EmailService', ['$http', '$q', function($http, $q) {
         getEmailStatus: function(msgId) {
             return $http({
                 method: 'GET',
-                url: '/email/msgId=' + msgId,
+                url: '/email/msgid=' + msgId,
             }).then(function(response) {
                     return response.data;
                 },
@@ -48,6 +48,6 @@ SesApp.factory('EmailService', ['$http', '$q', function($http, $q) {
                     return $q.reject(errResponse);
                 }
             );
-        },
+        }
     };
 }]);
