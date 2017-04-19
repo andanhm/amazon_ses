@@ -3,13 +3,105 @@
 	"name": "Amazon-SES",
 	"description": "",
 	"order": [
-		"8ff35457-120c-643e-eca5-a1e6f3eefa58"
+		"8ff35457-120c-643e-eca5-a1e6f3eefa58",
+		"3e0a8598-90b3-6f4c-7b7e-8abaa612cb2d",
+		"df708486-357d-c02e-6694-a47ca906b7de",
+		"17b4b028-60d6-ac1d-ae06-c3d6bfda59a2",
+		"f628e090-cab7-5165-b3c3-c3f870fee4d4",
+		"f9de9cb1-01ef-8b27-0151-ca008817ebf6"
 	],
 	"folders": [],
 	"timestamp": 1492001027964,
 	"owner": "117794",
 	"public": false,
 	"requests": [
+		{
+			"id": "17b4b028-60d6-ac1d-ae06-c3d6bfda59a2",
+			"headers": "",
+			"url": "http://localhost:8080/email",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "7310a60a-e595-78e4-a9ff-8624494e5105",
+			"data": null,
+			"dataMode": "params",
+			"name": "Fetch email request and status of the email",
+			"description": "Fetch email request and status of the email (responce object containes all the status of the email)",
+			"descriptionFormat": "html",
+			"time": 1492606050629,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "3e0a8598-90b3-6f4c-7b7e-8abaa612cb2d",
+			"headers": "",
+			"url": "http://localhost:8080/email",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "email",
+					"value": "andanhm3@gmail.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "success@simulator.amazonses.com",
+					"type": "text",
+					"enabled": false
+				},
+				{
+					"key": "email",
+					"value": "bounce@simulator.amazonses.com",
+					"type": "text",
+					"enabled": false
+				},
+				{
+					"key": "email",
+					"value": "complaint@simulator.amazonses.com",
+					"type": "text",
+					"enabled": false
+				},
+				{
+					"key": "name",
+					"value": "amazon",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "subject",
+					"value": "Test email",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "message",
+					"value": "<b>Welcome</b> <br/> Amazon ses demo project",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "attachment",
+					"value": "Amazon_alt.png",
+					"type": "file",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1492605911504,
+			"name": "Send",
+			"description": "Email sending with attachment",
+			"collectionId": "7310a60a-e595-78e4-a9ff-8624494e5105",
+			"responses": []
+		},
 		{
 			"id": "8ff35457-120c-643e-eca5-a1e6f3eefa58",
 			"headers": "",
@@ -21,9 +113,67 @@
 			"data": null,
 			"dataMode": "params",
 			"name": "Home",
-			"description": "Amazone SES home page url to send email",
+			"description": "Amazon SES home page url to send email",
 			"descriptionFormat": "html",
 			"time": 1492001027913,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "df708486-357d-c02e-6694-a47ca906b7de",
+			"headers": "",
+			"url": "localhost:8080/email",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1492582979314,
+			"name": "Fetch blacklist",
+			"description": "List all the email address blacklisted from sending email",
+			"collectionId": "7310a60a-e595-78e4-a9ff-8624494e5105",
+			"responses": []
+		},
+		{
+			"id": "f628e090-cab7-5165-b3c3-c3f870fee4d4",
+			"headers": "",
+			"url": "http://localhost:8080/blacklist",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "7310a60a-e595-78e4-a9ff-8624494e5105",
+			"data": null,
+			"dataMode": "params",
+			"name": "Blacklist",
+			"description": "Fetchs all the blacklist",
+			"descriptionFormat": "html",
+			"time": 1492606094614,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "f9de9cb1-01ef-8b27-0151-ca008817ebf6",
+			"headers": "",
+			"url": "http://localhost:8080/blacklist/bounce@simulator.amazonses.com",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "DELETE",
+			"collectionId": "7310a60a-e595-78e4-a9ff-8624494e5105",
+			"data": null,
+			"dataMode": "params",
+			"name": "Remove email from blacklist",
+			"description": "Removes email address from the blacklist",
+			"descriptionFormat": "html",
+			"time": 1492606168210,
 			"version": 2,
 			"responses": [],
 			"tests": null,
