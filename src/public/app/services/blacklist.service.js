@@ -5,7 +5,7 @@ SesApp.factory('BlacklistService', ['$http', '$q', function($http, $q) {
         removeFromBlacklist: function(email) {
             return $http({
                 method: 'DELETE',
-                url: '/blacklist/email=' + email,
+                url: '/blacklist/' + email,
             }).then(function(response) {
                     return response.data;
                 },

@@ -1,7 +1,7 @@
 'use strict';
 var errSource = require('path').basename(__filename),
-    debug = require('debug')('email:' + errSource),
-    awsConfig = require('../../config/' + process.env.NODE_ENV).aws.ses, //Key can be set from environment variable or config.
+    debug = require('debug')('ses:' + errSource),
+    awsConfig = require('../../config/' + process.env.NODE_ENV).aws, //Key can be set from environment variable or config.
     nodeMailer = require('nodemailer'),
     ses = require('nodemailer-ses-transport');
 
@@ -41,7 +41,7 @@ function SESMailer() {}
  * @param {sendEmailCallback} callback Callback for email processed details / error details 
  */
 SESMailer.prototype.sendEmail = function(options, callback) {
-    return callback(null, 'ok');
+    // return callback(null, 'ok');
     transporter.sendMail({
         from: options.from,
         to: options.to,

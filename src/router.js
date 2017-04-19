@@ -12,6 +12,6 @@ module.exports = function(app) {
 
     //--------------------blacklist controller--------------------------------//
     app.get('/blacklist', blacklistCtrl.getBlacklisted); // API route to get email blacklist
-    app.delete('/blacklist', blacklistCtrl.removeBlacklisted); // API route to remove email from the blacklist
+    app.delete('/blacklist/:email', blacklistCtrl.removeBlacklisted); // API route to remove email from the blacklist
 
 };

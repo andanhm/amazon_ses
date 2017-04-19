@@ -1,13 +1,19 @@
 {
     "multiples": 1,
     "port": 8080,
-    "fromEmail": "Amazon <success@simulator.amazonses.com>",
+    "fromEmail": "andanhm3@gmail.com",
     "aws": {
-        "ses": {
-            "accessKeyId": "xxxxxxxxxx",
-            "secretAccessKey": "xxxxxxx",
-            "region": "us-east-1"
-        }
+        "accessKeyId": "xxxxxx",
+        "secretAccessKey": "xxxxxxx",
+        "region": "us-west-2"
+    },
+    "ses": {
+
+    },
+    "sqs": {
+        "bounce": "https://sqs.us-west-2.amazonaws.com/912138752925/ses-bounces-email",
+        "complaint": "https://sqs.us-west-2.amazonaws.com/912138752925/ses-complaints-email",
+        "delivery": "https://sqs.us-west-2.amazonaws.com/912138752925/ses-delivery-email"
     },
     "db": {
         "mongo": "mongodb://127.0.0.1/amazon_ses?authSource=admin"

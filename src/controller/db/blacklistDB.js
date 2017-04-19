@@ -21,12 +21,12 @@ var errSource = require('path').basename(__filename),
  */
 function saveEmailBlacklist(email, emailFeedbackType, callback) {
     var emailBlacklist = new EmailBlacklist({
-        email: email
+        email: email,
+        emailFeedbackType: emailFeedbackType
     });
     emailBlacklist.save(function(err, result) {
         debug('saveEmailStatusRecord err : %j result : %j', err, result);
         if (err) {
-            log.enterErrorLog(6010, errSource, 'saveEmailStatusRecord', 'Failed to get the mongo email information', 'Failed to fetch the collection from mongo', err);
             return callback(err, null);
         }
         return callback(null, result);

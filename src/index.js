@@ -1,11 +1,5 @@
 'use strict';
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
-if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'testing') {
-    process.env.DEBUG = process.env.DEBUG || 'app,express:application,info,ses:*,mongodb';
-}
-
 var errSource = require('path').basename(__filename),
     debug = require('debug')('ses:' + errSource),
     log = require('./handlers/logs'),
@@ -13,10 +7,6 @@ var errSource = require('path').basename(__filename),
     numCPUs = require('os').cpus().length,
     app = require('./app'),
     config = require('./config/' + process.env.NODE_ENV);
-
-process.env.PORT = process.env.PORT || config.port;
-
-process.env.VERSION = require('./package.json').version || '1.0.0';
 
 debug('environment: ' + process.env.NODE_ENV);
 debug('version: ' + process.env.VERSION);
@@ -64,9 +54,7 @@ process.on('exit', function(code) {
 });
 
 process.on('uncaughtException', function(err) {
-    log.enterErrorLog(1, errSource, 'process.on', 'Unhandled exception', '', err, function() {
-        process.exit(1);
-    });
+    log.enterErrorLog(1, errSource, 'process.on', 'Unhandled exception', '', err);
 });
 
 process.on('SIGINT', function() {

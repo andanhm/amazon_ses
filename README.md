@@ -1,6 +1,6 @@
 # Amazon SES with handling Bounces and Complaints 
 
-> This is a dome project to send email with attachment using Amazon SES and handling email matrix (Bounces and Complaints) by Amazon SQS  
+> This is a dome project to send email with attachment using Amazon SES and handling email matrix (Bounces,Complaints and Delivery) by configuring Amazon SNS consuming thought SQS
 
 Handling Bounces and Complaints:
 
@@ -10,10 +10,20 @@ Handling Bounces and Complaints:
 - Dashboard to see the status email delivery 
 - Dashboard to control and managing the blacklist 
 
-**Technical details**
+**For technical details and configuring the sqs for handing the email delivery status watch below video**
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/n3Fr0bCsIvo/0.jpg)](https://www.youtube.com/watch?v=n3Fr0bCsIvo)
+[![IMAGE ALT Handling Bounces and Complaints with Amazon Simple Email Service](https://i.ytimg.com/vi/n3Fr0bCsIvo/maxresdefault.jpg)](https://www.youtube.com/watch?v=n3Fr0bCsIvo)
 
+**Note**
+- After configuring the SNS create a 3 queues using SQS
+- Subscribe the each queues with the SNS topic
+- Update the accessKeyId,secretAccessKey,region and 3 SQS queue url in config->developed.json
+
+```
+ses-bounces-email (topic) to ses-bounces-email (queue)
+ses-complaints-email (topic) to ses-complaints-email (queue)
+ses-complaints-email (topic) to ses-complaints-email (queue)
+```
 
 ## APIs
 All the APIs that are expose can be found in `routes`.
@@ -104,11 +114,11 @@ Postman Amazon SES API collection
 - src/
   |__ index.js
   |__ app.js
+  |__ cleanup.js
   |__ public /
   |__ config /
       |__ development.json
       |__ production.json
-      |__ testing.json 
   |__ controllers /
   |__ handlers
           |__ mongo /
@@ -121,7 +131,6 @@ Postman Amazon SES API collection
 	      |__ test.email.js
 	      |__ test.blacklist.js
   |__ gulpfile.js
-  |__ cleanup.js
   |__ package.json
     
 ```
@@ -138,10 +147,12 @@ Amazon ses uses a number of open source projects to work properly:
 * [Express] - fast node.js network app framework
 * [MongoDB] - MongoDB is a free and open-source cross-platform document-oriented database program.
 
-### Dev Tech
+### Development Tech
 Amazon SES uses a number of open source projects to make development faster, efficient and automate the build process:
 * [SES] - Amazon Simple Email Service (Amazon SES) is a cost-effective email service built on the reliable and scalable infrastructure that Amazon.com developed to serve its own customer base
-* [SQS] - Amazon Simple Queue Service (SQS) is a fully-managed message queuing service for reliably communicating among distributed software components and microservices - at any scale
+* [SNS] - Amazon Simple Notification Service (Amazon SNS) is a fast, flexible, fully managed push notification service that lets you send individual messages or to fan-out messages to large numbers of recipients.
+* [SQS] - Amazon Simple Queue Service (SQS) is a fully-managed message queuing service for reliably communicating among distributed software components and microservices - at any scale. 
+* [async] - Async is a utility module which provides straight-forward, powerful functions for working with asynchronous JavaScript.
 * [Nodemailer] - Nodemailer is a module for Node.js applications to allow easy as cake email sending. 
 * [eslint] - A plumbable and configurable linter tool for identifying and reporting on patterns in JavaScript. Maintain your code quality with ease.!
 * [gulp] - Gulp is a toolkit for automating painful or time-consuming tasks in your development work flow, so you can stop messing around and build something.
@@ -180,8 +191,10 @@ $ gulp
 ## TODO
 * Need to need high efficiency of sending email use RabbitMQ 
 * Charts to see the success / failure email delivery status  
+
 [SES]: <https://aws.amazon.com/ses/>
 [SQS]: <https://aws.amazon.com/sqs/>
+[SNS]: <https://aws.amazon.com/sns/>
 [node.js]: <http://nodejs.org>
 [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
 [Express]: <http://expressjs.com>
@@ -194,3 +207,4 @@ $ gulp
 [should]: <https://shouldjs.github.io/>
 [supertest]: <https://github.com/visionmedia/supertest>
 [Nodemailer]:<https://nodemailer.com/>
+[async]:<https://caolan.github.io/async/docs.html>

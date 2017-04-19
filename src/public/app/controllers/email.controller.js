@@ -28,7 +28,7 @@ SesApp.controller('EmailController', ['$scope', 'EmailService', 'Title', functio
         EmailService.getEmails().then(
             function(response) {
                 if (response.error) {
-                    $scope.emails = 'Unable to send email. Try again later!!!';
+                    $scope.emails = 'Unable to fetch email request. Try again later!!!';
                     $scope.alert = 'alert alert-danger alert-dismissable';
                 } else {
                     $scope.emails = response.data;

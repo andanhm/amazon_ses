@@ -12,7 +12,7 @@ SesApp.factory('EmailService', ['$http', '$q', function($http, $q) {
                     formData.append('email', emailDetails.email);
                     formData.append('name', emailDetails.name);
                     formData.append('subject', emailDetails.subject);
-                    formData.append('message', emailDetails.email);
+                    formData.append('message', emailDetails.message);
                     formData.append('attachment', data.files[0]);
                     return formData;
                 },

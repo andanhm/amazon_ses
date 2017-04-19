@@ -33,7 +33,7 @@ function saveEmailStatusRecord(emailRequestObject, callback) {
     emailStatus.save(function(err, result) {
         debug('saveEmailStatusRecord err : %j result : %j', err, result);
         if (err) {
-            log.enterErrorLog(6010, errSource, 'saveEmailStatusRecord', 'Failed to set the mongo email information', 'Failed to set the collection to mongo', err);
+            log.enterErrorLog(6001, errSource, 'saveEmailStatusRecord', 'Failed to set the mongo email information', 'Failed to set the collection to mongo', err);
             return callback(err, null);
         }
         return callback(null, result);
@@ -55,7 +55,37 @@ function getEmailRequestObject(callback) {
     EmailStatus.find({}, { _id: 0, __v: 0 }, function(err, result) {
         debug('getEmailRequestObject err : %j result : %j', err, result);
         if (err) {
-            log.enterErrorLog(6010, errSource, 'getEmailRequestObject', 'Failed to get the mongo email information', 'Failed to fetch the collection from mongo', err);
+            log.enterErrorLog(6002, errSource, 'getEmailRequestObject', 'Failed to get the mongo email information', 'Failed to fetch the collection from mongo', err);
+            return callback(err, null);
+        }
+        return callback(null, result);
+    });
+}
+/**
+ * Callback for getting the MongoDB update status
+ * 
+ * @callback updateEmailStatusCallback
+ * @param {Object} err Returns mongo save error status details
+ * @param {Object} status Returns the number record updated  
+ */
+/**
+ * Update email status 
+ * 
+ * @param  {Object} emailFeedbackObjectObject  Email feedback details
+ * @param  {updateEmailStatusCallback} callback - A callback to save email request
+ */
+function updateEmailStatus(emailRequestObject, callback) {
+    EmailStatus.update({
+        messageId: emailRequestObject.messageId
+    }, {
+        $set: {
+            response: emailRequestObject.response,
+            status: emailRequestObject.status
+        }
+    }, function(err, result) {
+        debug('updateEmailStatus err : %j result : %j', err, result);
+        if (err) {
+            log.enterErrorLog(6003, errSource, 'updateEmailStatus', 'Failed to update the mongo email information', 'Failed to update the collection to mongo', err);
             return callback(err, null);
         }
         return callback(null, result);
@@ -63,5 +93,6 @@ function getEmailRequestObject(callback) {
 }
 module.exports = {
     saveEmailStatusRecord: saveEmailStatusRecord,
-    getEmailRequestObject: getEmailRequestObject
+    getEmailRequestObject: getEmailRequestObject,
+    updateEmailStatus: updateEmailStatus
 }

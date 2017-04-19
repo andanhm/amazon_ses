@@ -21,3 +21,7 @@ function extractor(email) {
     }
     return email;
 }
+
+module.exports = {
+    extractor: extractor
+}

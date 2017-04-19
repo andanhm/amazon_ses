@@ -1,5 +1,6 @@
 'use strict';
 var gulp = require('gulp'),
+    debug = require('debug')('ses:gulp'),
     plumber = require('gulp-plumber'),
     nodemon = require('gulp-nodemon'),
     del = require('del'),
@@ -36,7 +37,7 @@ gulp.task('default', ['lint', 'clean'], function() {
             }
         })
         .on('restart', ['lint', 'clean'], function() {
-            console.log('Amazon SES restart with changes');
+            debug('Amazon SES restart with changes');
         });
 });
 

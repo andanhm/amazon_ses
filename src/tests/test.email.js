@@ -7,7 +7,7 @@ var supertest = require('supertest'),
     express = require('../app'),
     app = {},
     server = {};
-describe('Amazon SES health API -- ', function() {
+describe('Amazon SES Email API -- ', function() {
 
     before(function(next) {
         app = express.listen(function() {

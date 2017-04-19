@@ -1,10 +1,19 @@
 'use strict';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 var errSource = require('path').basename(__filename),
     debug = require('debug')('ses:' + errSource),
     http = require('./handlers/http'),
     multer = require('multer'),
+    config = require('./config/' + process.env.NODE_ENV),
     path = require('path');
 
+if (process.env.NODE_ENV === 'development') {
+    process.env.DEBUG = process.env.DEBUG || 'app,info,ses:*';
+}
+process.env.PORT = process.env.PORT || config.port;
+
+process.env.VERSION = require('./package.json').version || '1.0.0';
 debug('environment: ' + process.env.NODE_ENV);
 debug('version: ' + process.env.VERSION);
 
@@ -24,7 +33,20 @@ app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
     extended: true
 }));
-app.use(multer({ dest: path.join(__dirname, 'uploads') }).any());
+
+//Handles to store files in a folder with the file extension.
+var storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        return callback(null, path.join(__dirname, 'uploads'))
+    },
+    filename: function(req, file, callback) {
+        var extArray = file.mimetype.split('/'),
+            extension = extArray[extArray.length - 1];
+        return callback(null, file.fieldname + '-' + Date.now() + '.' + extension)
+    }
+});
+
+app.use(multer({ storage: storage }).any());
 
 //Create a middleware that adds a X-Response-Time header to responses.
 app.use(require('response-time')());
@@ -63,8 +85,11 @@ app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.ico')));
 
 require('./router.js')(app);
 /**
- * A background service to manage the queue
+ * A background service to manage the email feedback
  */
+require('./services/bounce.handling');
+require('./services/complaints.handling');
+require('./services/delivery.handling');
 
 // Initialize mongo db connection
 require('./handlers/mongo/mongoClient').connect();

@@ -7,7 +7,7 @@ var supertest = require('supertest'),
     express = require('../app'),
     app = {},
     server = {};
-describe('Amazon SES health API -- ', function() {
+describe('Backlist manage API -- ', function() {
 
     before(function(next) {
         app = express.listen(function() {
@@ -50,7 +50,7 @@ describe('Amazon SES health API -- ', function() {
 
     it('/Delete Remove the email address from the blacklist', function(done) { //API test delete a email from the blacklist
         server
-            .delete('/blacklist?email=bounce@simulator.amazonses.com')
+            .delete('/blacklist/bounce@simulator.amazonses.com')
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .expect('Content-type', /json/)
             .expect(200)

@@ -7,7 +7,7 @@ SesApp.controller('BlacklistController', ['$scope', 'Title', 'BlacklistService',
         BlacklistService.getBlacklist().then(
             function(response) {
                 if (response.error) {
-                    $scope.alertMessage = 'Unable to send email. Try again later!!!';
+                    $scope.alertMessage = 'Unable to fetch email blacklist. Try again later!!!';
                     $scope.alert = 'alert alert-danger alert-dismissable';
 
                 } else {
@@ -23,11 +23,11 @@ SesApp.controller('BlacklistController', ['$scope', 'Title', 'BlacklistService',
         BlacklistService.removeFromBlacklist(email).then(
             function(response) {
                 if (response.error) {
-                    $scope.alertMessage = 'Unable to send email. Try again later!!!';
+                    $scope.alertMessage = 'Unable to remove email from blacklist. Try again later!!!';
                     $scope.alert = 'alert alert-danger alert-dismissable';
 
                 } else {
-                    $scope.alertMessage = 'Message send successfully';
+                    $scope.alertMessage = 'Email removed from blacklist successfully';
                     $scope.alert = 'alert alert-success alert-dismissable';
 
                 }
