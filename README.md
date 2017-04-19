@@ -1,6 +1,19 @@
 # Amazon SES with handling Bounces and Complaints 
 
-> This is a dome project to send email with attachment using Amazon SES and handling email matrix with SQS 
+> This is a dome project to send email with attachment using Amazon SES and handling email matrix (Bounces and Complaints) by Amazon SQS  
+
+Handling Bounces and Complaints:
+
+![img](http://d1rzytnzenov8d.cloudfront.net/ses_process_bounce_complaints_2.png)
+
+- Monitor your bounces and complaints and remove any bounced or complained recipient addresses from your mailing list.
+- Dashboard to see the status email delivery 
+- Dashboard to control and managing the blacklist 
+
+**Technical details**
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/n3Fr0bCsIvo/0.jpg)](https://www.youtube.com/watch?v=n3Fr0bCsIvo)
+
 
 ## APIs
 All the APIs that are expose can be found in `routes`.
@@ -103,9 +116,10 @@ Postman Amazon SES API collection
           |__ logs.js
   |__ service /
           |__ sqsMatrixService.js
-  |__ routes.js    
-  |__ test /
-	      |__ test.email.js     
+  |__ router.js    
+  |__ tests /
+	      |__ test.email.js
+	      |__ test.blacklist.js
   |__ gulpfile.js
   |__ cleanup.js
   |__ package.json
@@ -126,7 +140,8 @@ Amazon ses uses a number of open source projects to work properly:
 
 ### Dev Tech
 Amazon SES uses a number of open source projects to make development faster, efficient and automate the build process:
-
+* [SES] - Amazon Simple Email Service (Amazon SES) is a cost-effective email service built on the reliable and scalable infrastructure that Amazon.com developed to serve its own customer base
+* [SQS] - Amazon Simple Queue Service (SQS) is a fully-managed message queuing service for reliably communicating among distributed software components and microservices - at any scale
 * [Nodemailer] - Nodemailer is a module for Node.js applications to allow easy as cake email sending. 
 * [eslint] - A plumbable and configurable linter tool for identifying and reporting on patterns in JavaScript. Maintain your code quality with ease.!
 * [gulp] - Gulp is a toolkit for automating painful or time-consuming tasks in your development work flow, so you can stop messing around and build something.
@@ -165,7 +180,8 @@ $ gulp
 ## TODO
 * Need to need high efficiency of sending email use RabbitMQ 
 * Charts to see the success / failure email delivery status  
-
+[SES]: <https://aws.amazon.com/ses/>
+[SQS]: <https://aws.amazon.com/sqs/>
 [node.js]: <http://nodejs.org>
 [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
 [Express]: <http://expressjs.com>
