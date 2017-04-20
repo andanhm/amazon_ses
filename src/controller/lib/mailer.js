@@ -37,7 +37,6 @@ function Mailer() {
  */
 Mailer.prototype.processEmail = function(objSendEmail, callback) {
     var param = objSendEmail;
-
     debug('Params', param);
 
     if (param.email) {
@@ -61,10 +60,11 @@ Mailer.prototype.processEmail = function(objSendEmail, callback) {
             log.error(2002, errSource, 'isEmailBlacklisted', param.email + ' is blacklisted, hence not sending email to this recipient', '');
             return callback(err, null);
         }
-
+        var emailTracker = '<img alt="tracker" src="http://localhost:8080/track?requestID=' + param.emailRequestId + '" />';
         var messageObj = {
+            emailRequestId: param.emailRequestId,
             from: config.fromEmail,
-            message: param.message,
+            message: param.message + emailTracker,
             subject: param.subject,
             to: param.name + '<' + param.email + '>',
             bcc: param.bcc || '',

@@ -12,6 +12,7 @@ var statusSchema = new Schema({
     from: { type: String, default: '' },
     to: { type: String, default: '', index: true },
     bcc: { type: String, default: '' },
+    emailRequestId: { type: String, default: '', index: true },
     response: {
         type: Schema.Types.Mixed,
         default: {}

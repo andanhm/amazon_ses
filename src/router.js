@@ -1,6 +1,7 @@
 'use strict';
 var appCtrl = require('./controller/indexCtrl'),
     emailCtrl = require('./controller/emailCtrl'),
+    trackCtrl = require('./controller/trackCtrl'),
     blacklistCtrl = require('./controller/blacklistCtrl');
 module.exports = function(app) {
     //--------------------Amazon status controller --------------------------------//
@@ -13,5 +14,8 @@ module.exports = function(app) {
     //--------------------blacklist controller--------------------------------//
     app.get('/blacklist', blacklistCtrl.getBlacklisted); // API route to get email blacklist
     app.delete('/blacklist/:email', blacklistCtrl.removeBlacklisted); // API route to remove email from the blacklist
+
+    //--------------------email track controller--------------------------------//
+    app.get('/track', trackCtrl.trackEmail); // API route to get email blacklist
 
 };

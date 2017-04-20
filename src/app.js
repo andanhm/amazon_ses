@@ -11,6 +11,7 @@ var errSource = require('path').basename(__filename),
 if (process.env.NODE_ENV === 'development') {
     process.env.DEBUG = process.env.DEBUG || 'app,info,ses:*';
 }
+// process.env.DEBUG = '';
 process.env.PORT = process.env.PORT || config.port;
 
 process.env.VERSION = require('./package.json').version || '1.0.0';

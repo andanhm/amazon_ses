@@ -1,6 +1,7 @@
 'use strict';
 var Mailer = require('./lib/mailer'),
     statusDB = require('./db/statusDB'),
+    uuid = require('uuid'),
     mailer = new Mailer();
 /**
  * Ideally should return '{Object}' for email sent status
@@ -12,12 +13,14 @@ var Mailer = require('./lib/mailer'),
  */
 function send(req, res) {
     var data = {
+        emailRequestId: uuid.v4(),
         name: req.body.name,
         email: req.body.email,
         subject: req.body.subject,
         message: req.body.message,
         attachment: req.files
     }
+    console.log(data)
     mailer.processEmail(data, function(error, response) {
         return res.status(200).type('json').send({
             error: error,

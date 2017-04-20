@@ -1,6 +1,6 @@
 'use strict';
 var errSource = require('path').basename(__filename),
-    debug = require('debug')('email:' + errSource),
+    debug = require('debug')('ses:' + errSource),
     log = require('../../handlers/logs.js'),
     EmailStatus = require('../../models/status').EmailStatus;
 
@@ -18,6 +18,7 @@ var errSource = require('path').basename(__filename),
  */
 function saveEmailStatusRecord(emailRequestObject, callback) {
     var emailStatus = new EmailStatus({
+        emailRequestId: emailRequestObject.emailRequestId,
         body: emailRequestObject.message,
         subject: emailRequestObject.subject,
         from: emailRequestObject.from,
