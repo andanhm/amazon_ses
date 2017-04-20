@@ -1,6 +1,6 @@
 # Amazon SES with handling Bounces and Complaints 
 
-> This is a dome project to send email with attachment using Amazon SES and handling email matrix (Bounces,Complaints and Delivery) by configuring Amazon SNS consuming thought SQS
+> This is a dome project to send email with attachment using Amazon SES and handling email matrix (Bounces,Complaints and Delivery) by configuring Amazon SNS consuming through SQS
 
 Handling Bounces and Complaints:
 
@@ -15,14 +15,17 @@ Handling Bounces and Complaints:
 [![IMAGE ALT Handling Bounces and Complaints with Amazon Simple Email Service](https://i.ytimg.com/vi/n3Fr0bCsIvo/maxresdefault.jpg)](https://www.youtube.com/watch?v=n3Fr0bCsIvo)
 
 **Note**
-- After configuring the SNS create a 3 queues using SQS
-- Subscribe the each queues with the SNS topic
 - Update the accessKeyId,secretAccessKey,region and 3 SQS queue url in config->developed.json
+
+**The flow of Bounce and Complaint handling in AWS using SNS**
+- 1) First, we need to create an SNS Topic. An SNS Topic is a communication channel to send messages and subscribe to notifications. It provides an access point for publishers and subscribers to communicate with each other. The following code snippet will create an SNS Topic called 'bounce-complaint-topic'.
+- 2) After creating the topic we'll now create a subscription request at Amazon SQS queue that can receive notification messages from Amazon SNS. Once you subscribe an endpoint to a topic and the subscription is confirmed, the endpoint will receive all messages published to that topic. 
+- 3) After confirming the subscription we'll now set the notifications types that will be published to the specified Amazon SNS topic,
 
 ```
 ses-bounces-email (topic) to ses-bounces-email (queue)
 ses-complaints-email (topic) to ses-complaints-email (queue)
-ses-complaints-email (topic) to ses-complaints-email (queue)
+ses-delivery-email (topic) to ses-delivery-email (queue)
 ```
 
 ## APIs
@@ -128,8 +131,8 @@ Postman Amazon SES API collection
           |__ sqsMatrixService.js
   |__ router.js    
   |__ tests /
-	      |__ test.email.js
-	      |__ test.blacklist.js
+	    |__ test.email.js
+	    |__ test.blacklist.js
   |__ gulpfile.js
   |__ package.json
     
@@ -163,7 +166,7 @@ Amazon SES uses a number of open source projects to make development faster, eff
 
 ### Installation - Testing
 
-* Clone the branch from [github]().
+* Clone the branch from [github](https://github.com/andanhm/amazon_ses).
 * Install MongoDB.
 * Config the all the server details into one of the `config file`.
 

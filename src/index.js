@@ -1,16 +1,24 @@
 'use strict';
 
-var errSource = require('path').basename(__filename),
+var path = require('path'),
+    errSource = path.basename(__filename),
     debug = require('debug')('ses:' + errSource),
     log = require('./handlers/logs'),
     cluster = require('cluster'),
     numCPUs = require('os').cpus().length,
     app = require('./app'),
+    fs = require('fs'),
+
     config = require('./config/' + process.env.NODE_ENV);
 
 debug('environment: ' + process.env.NODE_ENV);
 debug('version: ' + process.env.VERSION);
 
+// Creating folder to dump the attachment
+var dir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+}
 // Check if the master process is running
 if (cluster.isMaster) {
 
