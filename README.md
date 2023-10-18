@@ -211,3 +211,6 @@ $ gulp
 [supertest]: <https://github.com/visionmedia/supertest>
 [Nodemailer]:<https://nodemailer.com/>
 [async]:<https://caolan.github.io/async/docs.html>
+
+## Blogs & Tutorials
+- [https://blog.cloud66.com/using-ses-with-rails](https://blog.cloud66.com/using-ses-with-rails?utm_source=p&utm_medium=-&utm_campaign=github-bl)  
